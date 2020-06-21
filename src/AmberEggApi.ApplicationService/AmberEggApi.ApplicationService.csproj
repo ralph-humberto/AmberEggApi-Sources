@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+    <ProjectGuid>{EB0AC643-8245-4992-80D5-24E7AD64C821}</ProjectGuid>
+  </PropertyGroup>  
+
+  <ItemGroup>   
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Api.Common.WebServer\Api.Common.WebServer.csproj" />
+    <ProjectReference Include="..\AmberEggApi.Domain\AmberEggApi.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
