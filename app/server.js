@@ -7,7 +7,8 @@ const HOST = '0.0.0.0';
 
 const app = express();
 app.get('/', (req, res) => {
-  res.send('{"message": "AmberEggApi"}');
+  res.setHeader('Content-Type', 'application/json');
+  JSON.stringify({ message: "AmberEggApi" });
 });
 
 app.listen(PORT, HOST);
