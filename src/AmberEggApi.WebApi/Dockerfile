@@ -1,11 +1,13 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
+ENV ASPNETCORE_URLS=http://+:80
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
+ENV ASPNETCORE_URLS=http://+:80
 WORKDIR /src
 COPY ["AmberEggApi.WebApi/AmberEggApi.WebApi.csproj", "AmberEggApi.WebApi/"]
 COPY ["AmberEggApi.Infrastructure/AmberEggApi.Infrastructure.csproj", "AmberEggApi.Infrastructure/"]
@@ -23,9 +25,11 @@ WORKDIR "/src/AmberEggApi.WebApi"
 RUN dotnet build "AmberEggApi.WebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
+ENV ASPNETCORE_URLS=http://+:80
 RUN dotnet publish "AmberEggApi.WebApi.csproj" -c Release -o /app/publish
 
 FROM base AS final
+ENV ASPNETCORE_URLS=http://+:80
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "AmberEggApi.WebApi.dll"]
