@@ -1,12 +1,12 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
-WORKDIR /app
+WORKDIR /usr/src/app
 EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
-WORKDIR /src
+WORKDIR /usr/src/src
 COPY ["AmberEggApi.WebApi/AmberEggApi.WebApi.csproj", "AmberEggApi.WebApi/"]
 COPY ["AmberEggApi.Infrastructure/AmberEggApi.Infrastructure.csproj", "AmberEggApi.Infrastructure/"]
 COPY ["Api.Common.Repository.MongoDb/Api.Common.Repository.MongoDb.csproj", "Api.Common.Repository.MongoDb/"]
@@ -19,13 +19,13 @@ COPY ["Api.Common.WebServer/Api.Common.WebServer.csproj", "Api.Common.WebServer/
 COPY ["AmberEggApi.Database/AmberEggApi.Database.csproj", "AmberEggApi.Database/"]
 RUN dotnet restore "AmberEggApi.WebApi/AmberEggApi.WebApi.csproj"
 COPY . .
-WORKDIR "/src/AmberEggApi.WebApi"
+WORKDIR "/usr/src/src/AmberEggApi.WebApi"
 RUN dotnet build "AmberEggApi.WebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "AmberEggApi.WebApi.csproj" -c Release -o /app/publish
 
 FROM base AS final
-WORKDIR /app
+WORKDIR /usr/src/src/app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "AmberEggApi.WebApi.dll"]
