@@ -13,4 +13,4 @@ spec:
         - name: ralphhumbertoambereggapisources 
           image: acrrrdevamberegg.azurecr.io/ralphhumbertoambereggapisources
           ports:
-          - containerPort: 8080
+          - containerPort: 80
