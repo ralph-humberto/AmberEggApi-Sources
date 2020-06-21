@@ -14,7 +14,7 @@ variables:
   dockerRegistryServiceConnection: '2b96ea5f-410e-4efb-b2cd-512f6c750c6a'
   imageRepository: 'ralphhumbertoambereggapisources'
   containerRegistry: 'acrrrdevamberegg.azurecr.io'
-  dockerfilePath: 'src/AmberEggApi.WebApi/Dockerfile'
+  dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
   imagePullSecret: 'acrrrdevamberegge61d-auth'
 
@@ -36,12 +36,12 @@ stages:
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
+        containerRegistry: '$(dockerRegistryServiceConnection)'
+        repository: '$(imageRepository)'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        buildContext: './src'
+        tags: '$(tag)'
           
     - upload: manifests
       artifact: manifests
