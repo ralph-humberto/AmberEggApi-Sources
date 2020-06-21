@@ -21,6 +21,7 @@ COPY ["AmberEggApi.Database/AmberEggApi.Database.csproj", "AmberEggApi.Database/
 RUN dotnet restore "AmberEggApi.WebApi/AmberEggApi.WebApi.csproj"
 COPY . .
 WORKDIR "/src/AmberEggApi.WebApi"
+RUN dotnet restore "AmberEggApi.WebApi.csproj"
 RUN dotnet build "AmberEggApi.WebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
