@@ -59,11 +59,12 @@ cd ..\Your.Namespace
 
 ### Restore, Build and Test
 ```
+cd src
 dotnet restore
 dotnet build
 dotnet test
 
-
+cd AmberEggApi.WebApi
 dotnet run --p AmberEggApi.WebApi
 
 ```
