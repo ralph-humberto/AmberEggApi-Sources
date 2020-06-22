@@ -14,3 +14,17 @@ spec:
           image: acrrrdevamberegg.azurecr.io/ralphhumbertoambereggapisources
           ports:
           - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: transportservice-front
+annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+    type: LoadBalancer
+    ports:
+    - port: 80
+    targetPort: 8080
+selector:
+    app: transportservice-front
