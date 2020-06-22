@@ -9,6 +9,8 @@ resources:
 - repo: self
 
 variables:
+  resourceGroupName: '$(resourceGroupNamePreffix)-$(env)-$(count)'
+  resourceApiManagementName: '$(resourceApiManagementNamePreffix)-$(env)-$(count)'
 
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '2b96ea5f-410e-4efb-b2cd-512f6c750c6a'
