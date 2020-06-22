@@ -9,6 +9,8 @@ resources:
 - repo: self
 
 variables:
+  resourceGroupName: '$(resourceGroupNamePreffix)-$(env)-$(count)'
+  resourceApiManagementName: '$(resourceApiManagementNamePreffix)-$(env)-$(count)'
 
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '2b96ea5f-410e-4efb-b2cd-512f6c750c6a'
@@ -130,7 +132,13 @@ stages:
               namespace: $(k8sNamespaceForPR)
               arguments: svc
               outputFormat: jsonpath='http://{.items[0].status.loadBalancer.ingress[0].ip}:{.items[0].spec.ports[0].port}'
-              
+          
+          - task: AzurePowerShell@5
+            inputs:
+              azureSubscription: 'Avaliação Gratuita(18441764-decb-42f5-9121-06d30147bbbe)'
+              ScriptType: 'FilePath'
+              ScriptPath: './script/alignapim.ps1'
+              ScriptArguments: '$(resourceGroupName) $(resourceApiManagementName) $(resourceApiManagementApiName) $(get.KubectlOutput)'
           # Getting the IP of the deployed service and writing it to a variable for posing comment
           - script: |
               url="$(get.KubectlOutput)"
