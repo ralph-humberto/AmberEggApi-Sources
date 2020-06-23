@@ -10,6 +10,12 @@ resources:
 
 variables:
 
+  # Resources
+  resourceApiManagementNamePreffix: 'apim-'
+  resourceGroupNamePreffix: 'rs-gp'
+  resourceGroupName: '$(resourceGroupNamePreffix)-$(env)-$(count)'
+  resourceApiManagementName: '$(resourceApiManagementNamePreffix)-$(env)-$(count)'
+
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '69b9f46f-1fcc-418a-81c2-6f0a11132253'
   imageRepository: 'ralphhumbertoambereggapisources'
